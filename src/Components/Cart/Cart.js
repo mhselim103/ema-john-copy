@@ -1,7 +1,10 @@
 import './Cart.css'
 import React from 'react';
+import { useHistory } from "react-router-dom";
+
 
 const Cart = (props) => {
+    const history = useHistory();
     const { cart } = props;
     let totalQuantity = 0;
     let total = 0;
@@ -15,6 +18,10 @@ const Cart = (props) => {
     const tax = total * .10;
     const grandTotal = total + tax;
 
+    const handleReview = () => {
+        history.push('/review')
+    }
+
     return (
         <div>
             <h3>Order Summary</h3>
@@ -22,6 +29,7 @@ const Cart = (props) => {
             <h3>Total:{total.toFixed(2)}</h3>
             <h4>Tax:{tax.toFixed(2)} </h4>
             <h4>Grand Total:{grandTotal.toFixed(2)} </h4>
+            <button onClick={()=>handleReview()} className="purchase-button">Review Order</button>
         </div>
     );
 };
