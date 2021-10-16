@@ -1,23 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { addToDb, getStoredCart } from '../../utilities/fakedb';
+// import React, { useEffect, useState } from 'react';
+import useCart from '../../hooks/useCart';
+import useProducts from '../../hooks/useproducts';
+import { addToDb, } from '../../utilities/fakedb';
+// import { getStoredCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css'
 
 const Shop = () => {
 
+    /* //states
+    
     const [products, setProducts] = useState([]);
-    const [cart, setCart] = useState([]);
     const [filteredPd, setFilteredPd] = useState([]);
-    useEffect(() => {
+    const [cart, setCart] = useState([]); */
+
+    // useproducts and filtered products custoom hook 
+    const [products, filteredPd, setFilteredPd] = useProducts();
+    
+    // usecart custom hook 
+    const [cart, setCart] = useCart(products);
+
+    
+    /* useEffect(() => {
         fetch('./products.JSON')
             .then(res => res.json())
             .then(data => {
                 setProducts(data);
                 setFilteredPd(data)
             })
-    }, []);
-    useEffect(() => {
+    }, []); */
+
+
+    /*
+     useEffect(() => {
         const savedCart = getStoredCart();
         const storedCart = [];
         if (products.length) {
@@ -31,7 +47,9 @@ const Shop = () => {
             }
             setCart(storedCart);
         }
-    }, [products]);
+    }, [products]); 
+    */
+
     const handleAddToCart = product => {
         const newCart = [...cart, product]
         setCart(newCart);
@@ -41,7 +59,6 @@ const Shop = () => {
         const searchText = event.target.value;
         const matchedProduct = products.filter(product => product.name.toLowerCase().includes(searchText.toLowerCase()));
         setFilteredPd(matchedProduct);
-
         console.log(matchedProduct.length);
     }
     return (
@@ -56,7 +73,7 @@ const Shop = () => {
                 <div className="product-container">
 
                     {
-                        filteredPd.map(product => <Product
+                        filteredPd?.map(product => <Product
                             key={product.key}
                             product={product}
                             handleAddToCart={handleAddToCart}
