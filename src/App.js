@@ -4,10 +4,17 @@ import Header from './Components/Header/Header';
 import Shop from './Components/Shop/Shop';
 import Inventory from './Components/Inventory/Inventory'
 import OrderReview from './Components/OrderReview/OrderReview'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import LogIn from './Components/LogIn/LogIn';
+import Register from './Components/Register/Register';
+import AuthProvider from '../src/Context/AuthProvider'
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import PlaceOrder from './Components/PlaceOrder/PlaceOrder';
+
 
 function App() {
   return (
-    <div>
+    <AuthProvider>
       <BrowserRouter>
         <Header></Header>
         <Switch>
@@ -17,16 +24,25 @@ function App() {
           <Route  path="/shop">
             <Shop></Shop>
           </Route>
-          <Route path="/review">
+          <PrivateRoute path="/review">
             <OrderReview></OrderReview>
-          </Route>
+          </PrivateRoute>
           <Route path="/inventory">
             <Inventory></Inventory>
+          </Route>
+          <Route path="/login">
+            <LogIn></LogIn>
+          </Route>
+          <Route path="/register">
+            <Register> </Register>
+          </Route>
+          <Route path="/placeorder">
+            <PlaceOrder></PlaceOrder>
           </Route>
         </Switch>
       </BrowserRouter>
 
-    </div>
+    </AuthProvider>
   );
 }
 
